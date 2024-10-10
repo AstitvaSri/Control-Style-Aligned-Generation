@@ -1,5 +1,8 @@
 # Control-Style-Aligned-Generation
+
 This repository provides a reference image inversion-based ControlNet support to generate Style-Aligned images.
+<br>
+The base code is taken from [here](https://github.com/google/style-aligned).
 
 ---
 
