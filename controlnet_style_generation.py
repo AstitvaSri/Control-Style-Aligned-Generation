@@ -33,7 +33,7 @@ guidance_scale = 7.5
 seed = 999
 
 # reference style image and prompt
-# ref_image_path = "https://images.pexels.com/photos/18301887/pexels-photo-18301887/free-photo-of-religious-art-picturing-a-saint-on-the-wall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+ref_image_path = "https://images.pexels.com/photos/18301887/pexels-photo-18301887/free-photo-of-religious-art-picturing-a-saint-on-the-wall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
 ref_image = load_image(ref_image_path)
 ref_style = "mosaic art"
 ref_prompt = f"painting', {ref_style}."
