@@ -29,21 +29,22 @@ num_images_per_prompt = 1
 control_type = "canny" # "canny" or "depth"
 preprocessor = True
 controlnet_conditioning_scale = 0.99
+guidance_scale = 7.5
 seed = 999
 
 # reference style image and prompt
-ref_image_path = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
+# ref_image_path = "https://images.pexels.com/photos/18301887/pexels-photo-18301887/free-photo-of-religious-art-picturing-a-saint-on-the-wall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
 ref_image = load_image(ref_image_path)
-ref_style = "hand drawn"
-ref_prompt = f"2D character face, {ref_style}."
+ref_style = "mosaic art"
+ref_prompt = f"painting', {ref_style}."
 
 # condition image for control
-cond_image_path = "https://www.thespruce.com/thmb/iMt63n8NGCojUETr6-T8oj-5-ns=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/PAinteriors-7-cafe9c2bd6be4823b9345e591e4f367f.jpg"
+cond_image_path = "https://images.pexels.com/photos/27928257/pexels-photo-27928257/free-photo-of-portrait-of-a-young-woman-with-wavy-hair.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
 cond_image = load_image(cond_image_path)
+out_size = cond_image.size
 
 # prompts to generate
-target_prompts = ['a medieval-room with a dirty bed',
-                  'a modern bedroom with clean orange-color bed',
+target_prompts = ['face of a woman',
 ]
 
 #save directory
@@ -54,7 +55,7 @@ os.makedirs(save_dir, exist_ok=True)
 
 if preprocessor:
     if control_type == "canny":
-        canny_image = cv2.Canny(np.asarray(cond_image).astype('uint8'), 5, 45)
+        canny_image = cv2.Canny(np.asarray(cond_image).astype('uint8'), 50, 200)
         canny_image = canny_image[:, :, None]
         canny_image = np.concatenate([canny_image, canny_image, canny_image], axis=2)
         cond_image = Image.fromarray(canny_image).resize((1024, 1024), 0)
@@ -119,15 +120,15 @@ if style_from_referemce_image:
 
 print("Generating...")
 all_prompts = [ref_prompt] + [f"{prompt}, {ref_style}" for prompt in target_prompts]
-breakpoint()
 images = pipeline(all_prompts,
                 latents=latents,
-                image=[cond_image]*len(all_prompts),
-                controlnet_conditioning_scale=0.99,
+                image=cond_image,
+                controlnet_conditioning_scale=controlnet_conditioning_scale,
                 callback_on_step_end=inversion_callback,
                 num_inference_steps=num_inference_steps,
-                guidance_scale=10).images
+                guidance_scale=guidance_scale).images
 
 # saving images except the reference image
 for idx, image in enumerate(images[1:]):
-    image.save(f"{save_dir}/generated_{idx}.png")
+    image = image.resize(out_size)
+    image.save(f"{save_dir}/generated_{idx+1}.png")
