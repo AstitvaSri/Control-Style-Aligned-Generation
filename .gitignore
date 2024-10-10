@@ -1,5 +1,4 @@
 *.pth
-*.png
 **/__pycache__
 .watchman*
 .nfs*
