@@ -14,7 +14,7 @@ import pipeline_calls
 import inversion
 
 # setup cache path for huggingface
-os.environ['CACHE_DIR'] = '/mnt/users_scratch/astitva/CACHE/'
+os.environ['CACHE_DIR'] = '/path/to/cache/dir/'
 os.environ['HF_HUB_OFFLINE'] = '1' # set it to 0 to download checkpoints for the first time
 os.environ['HF_HOME'] = os.environ['CACHE_DIR']
 os.environ['HF_DATASETS_CACHE'] = os.environ['CACHE_DIR']
