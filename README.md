@@ -3,7 +3,7 @@
 This repository provides a reference image inversion-based ControlNet support to generate Style-Aligned images.
 <br>
 <br>
-The base code is taken from [here](https://github.com/google/style-aligned) which only supports controllable generation via a style prompt. I have combined the DDIM inversion with ControlNet pipeline to allow style conditioning from a reference image.
+I have integrated [this](https://github.com/google/style-aligned) paper with DDIM inversion and ControlNet pipeline to allow style conditioning from a reference image.
 
 ---
 
