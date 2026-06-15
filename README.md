@@ -1,4 +1,4 @@
-# Control-Style-Aligned-Generation
+# Controllable Style-Aligned Image Generation
 
 This repository provides a reference image inversion-based ControlNet support to generate Style-Aligned images.
 <br>
